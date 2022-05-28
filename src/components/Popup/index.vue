@@ -18,12 +18,6 @@
                 :data="_data[item.field] || []"
                 @change="checkBoxChange($event, _data, item.field)"
               />
-              <!-- <span
-              v-for="(op, key) in renderProps(item).options || []"
-              :key="op.label || key"
-            >
-              {{ op.label }}
-            </span> -->
             </div>
             <hr />
           </div>
@@ -41,7 +35,7 @@
 
 <script>
 import CheckBox from "@/components/CheckBox/index.vue";
-import { toRefs, ref, unref } from "vue";
+import { toRefs, ref, unref, effect } from "vue";
 export default {
   name: "PopUp",
   components: {
@@ -66,7 +60,10 @@ export default {
     },
   },
   setup(props, ctx) {
-    const _data = ref(props.data);
+    const _data = ref();
+    effect(() => {
+      _data.value = props.data;
+    });
     const close = () => {
       ctx.emit("close");
     };

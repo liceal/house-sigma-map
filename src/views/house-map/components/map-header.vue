@@ -20,7 +20,7 @@ import SearchInput from "@/components/SearchInput/index.vue";
 import FilterBlock from "@/components/FilterBlock/index.vue";
 import Popup from "@/components/Popup/index.vue";
 
-import { computed, ref, inject, reactive } from "vue";
+import { computed, ref, inject, reactive, effect } from "vue";
 export default {
   name: "MyHeader",
   components: {
@@ -29,10 +29,14 @@ export default {
     Popup,
   },
   setup(props, ctx) {
-    const searchValue = inject("searchValue");
-    const filterBlockAttrs = inject("filterBlock");
+    const searchValue = ref("");
+    const filterBlockAttrs = ref({});
+    effect(() => {
+      searchValue.value = inject("searchValue");
+      filterBlockAttrs.value = inject("filterBlock");
+    });
     const back = () => {
-      this.$emit("back");
+      ctx.emit("back");
     };
 
     let filterBlockActiveField = null;
@@ -52,13 +56,14 @@ export default {
     const popupMethods = {
       //弹出框事件
       close: () => {
-        filterBlockAttrs.data[filterBlockActiveField] = false;
+        filterBlockAttrs.value.data[filterBlockActiveField] = false;
         popupAttrs.value.visible = false;
       },
       apply: ({ value, data }) => {
         Reflect.ownKeys(value).forEach((k) => {
           data[k] = value[k];
         });
+        ctx.emit("filterApply", data);
         popupMethods.close();
       },
       clear: () => {

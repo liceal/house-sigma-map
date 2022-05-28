@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { toRefs, ref } from "vue";
+import { unref, ref } from "vue";
 export default {
   name: "CheckBox",
   props: {
@@ -38,7 +38,7 @@ export default {
         activeMap.value.add(item);
       });
     } else {
-      active.value = toRefs(props.data);
+      active.value = unref(props.data);
     }
 
     const toggle = (item) => {

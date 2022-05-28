@@ -65,7 +65,7 @@ export default {
   .prefix {
     position: absolute;
     top: 7px;
-    left: 7px;
+    left: 14px;
   }
   input {
     padding: 8px 42px;
@@ -77,7 +77,7 @@ export default {
   }
   .suffix {
     position: absolute;
-    right: 7px;
+    right: 14px;
     top: 4px;
   }
 }

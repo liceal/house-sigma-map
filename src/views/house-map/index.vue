@@ -1,18 +1,23 @@
 <template>
   <div>
-    <MapHeader @searchEnter="searchEnter" @filterApply="filterApply" />
+    <MapHeader
+      @searchEnter="searchEnter"
+      @filterApply="filterApply"
+      @back="back"
+    />
     <MapView />
   </div>
 
-  searchValue {{ searchValue }}
+  <!-- searchValue {{ searchValue }}
   <br />
-  filters {{ filterBlock.items[0].popup.data }}
+  filters {{ filterBlock.items[0].popup.data }} -->
 </template>
 
 <script>
 import MapHeader from "./components/map-header.vue";
 import MapView from "./views/map-view.vue";
 import { ref, reactive, provide } from "vue";
+import { useStore } from "@/store/map";
 export default {
   name: "HouseMap",
   components: {
@@ -20,6 +25,8 @@ export default {
     MapView,
   },
   setup(props, ctx) {
+    const mapStore = useStore();
+
     const searchValue = ref("");
     provide("searchValue", searchValue);
 
@@ -86,7 +93,7 @@ export default {
                 },
               },
             ],
-            data: {
+            data: mapStore.getLocalStorageFilters() || {
               Bedrooms: [],
               Bathroom: "",
               GarageParking: "",
@@ -102,10 +109,17 @@ export default {
       console.log("search", val, searchValue.value);
     };
 
-    const filterApply = (val) => {
-      console.log("filter", val, filterBlock.data);
+    const back = () => {
+      console.log("back");
     };
-    return { searchValue, filterBlock, searchEnter, filterApply };
+
+    const filterApply = (val) => {
+      // console.log(12312);
+      // console.log("filterApply", val, filterBlock);
+      // filterBlock.data =
+      mapStore.setFilters(val);
+    };
+    return { searchValue, filterBlock, searchEnter, filterApply, back };
   },
 };
 </script>
