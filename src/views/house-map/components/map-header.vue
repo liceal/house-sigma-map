@@ -61,6 +61,9 @@ export default {
         });
         popupMethods.close();
       },
+      clear: () => {
+        popupMethods.close();
+      },
     };
 
     const searchInputEnter = (val) => {

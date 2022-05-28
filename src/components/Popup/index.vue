@@ -1,35 +1,41 @@
 <template>
-  <div class="popup" v-if="visible">
+  <div class="popup" v-show="visible">
     <div class="mask" @click="close" />
-    <div class="container">
-      <div class="title">title</div>
-      <div class="content">
-        <div class="line" v-for="(item, key) in items" :key="item.field || key">
-          <strong>{{ item.title }}</strong>
-          <div v-if="renderType(item) === 'checkbox'">
-            <CheckBox
-              :items="renderProps(item).options"
-              :multiple="renderProps(item).multiple"
-              :data="_data[item.field] || []"
-              @change="checkBoxChange($event, _data, item.field)"
-            />
-            <!-- <span
+    <transition name="popup">
+      <div class="container" v-if="visible">
+        <div class="title">title</div>
+        <div class="content">
+          <div
+            class="line"
+            v-for="(item, key) in items"
+            :key="item.field || key"
+          >
+            <strong>{{ item.title }}</strong>
+            <div v-if="renderType(item) === 'checkbox'">
+              <CheckBox
+                :items="renderProps(item).options"
+                :multiple="renderProps(item).multiple"
+                :data="_data[item.field] || []"
+                @change="checkBoxChange($event, _data, item.field)"
+              />
+              <!-- <span
               v-for="(op, key) in renderProps(item).options || []"
               :key="op.label || key"
             >
               {{ op.label }}
             </span> -->
+            </div>
+            <hr />
           </div>
-          <hr />
+        </div>
+        <div class="handler">
+          <slot name="footer">
+            <strong @click="clear">Clear</strong>
+            <strong @click="apply">Apply</strong>
+          </slot>
         </div>
       </div>
-      <div class="handler">
-        <slot name="footer">
-          <strong @click="clear">Clear</strong>
-          <strong @click="apply">Apply</strong>
-        </slot>
-      </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -168,6 +174,20 @@ export default {
       margin-right: 30px;
       color: #28a3b3;
     }
+  }
+}
+.popup-enter-active {
+  animation: popup-in 0.3s;
+}
+.popup-leave-active {
+  animation: popup-in 0.3s reverse;
+}
+@keyframes popup-in {
+  0% {
+    height: 0px;
+  }
+  100% {
+    height: 80%;
   }
 }
 </style>
