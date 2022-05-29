@@ -3,7 +3,7 @@
     <div class="mask" @click="close" />
     <transition name="popup">
       <div class="container" v-if="visible">
-        <div class="title">title</div>
+        <div class="title">{{ title }}</div>
         <div class="content">
           <div
             class="line"
@@ -65,10 +65,10 @@ export default {
       _data.value = JSON.parse(JSON.stringify(props.data));
     });
     const close = () => {
-      ctx.emit("close");
+      ctx.emit("close", props);
     };
     const clear = () => {
-      ctx.emit("clear");
+      ctx.emit("clear", props);
     };
     const apply = () => {
       // console.log(_data);

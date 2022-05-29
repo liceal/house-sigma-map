@@ -58,9 +58,9 @@ export default {
 .container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
   padding: 9px 16px;
   background-color: #28a3b3;
+  height: 32px;
   .item {
     display: flex;
     align-items: center;
@@ -87,6 +87,9 @@ export default {
       opacity: 0.5;
       margin-left: 10px;
     }
+  }
+  .item + .item {
+    margin-left: 10px;
   }
 }
 </style>

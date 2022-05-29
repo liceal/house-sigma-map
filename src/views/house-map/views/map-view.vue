@@ -36,12 +36,12 @@
 <script>
 import { GoogleMap, Marker, InfoWindow } from "vue3-google-map";
 import { computed, ref } from "vue";
-import { useStore } from "@/store/map";
+import { mapStore } from "@/store/map";
 export default {
   name: "MapView",
   components: { GoogleMap, Marker, InfoWindow },
   setup() {
-    const mapStore = useStore();
+    const maper = mapStore();
 
     const infoWindowRefs = ref([]);
 
@@ -121,7 +121,8 @@ export default {
     });
 
     const getMapData = computed(() => {
-      let { Bathroom, Bedrooms, GarageParking } = mapStore.filters;
+      let { Bathroom, Bedrooms, GarageParking } =
+        maper.filterMap["filters"] || {}; //可能没有这个值
 
       function analysis(str) {
         if (!str) return null;
