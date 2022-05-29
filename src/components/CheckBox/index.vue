@@ -23,7 +23,7 @@ export default {
     },
     data: {
       type: [Array, String],
-      default: () => [],
+      default: null,
     },
     multiple: {
       type: Boolean,
@@ -34,11 +34,11 @@ export default {
     const activeMap = ref(new Set());
     let active = ref();
     if (props.multiple) {
-      props.data.forEach((item) => {
+      props.data?.forEach((item) => {
         activeMap.value.add(item);
       });
     } else {
-      active.value = unref(props.data);
+      active.value = props.data ? unref(props.data) : "";
     }
 
     const toggle = (item) => {
@@ -50,7 +50,7 @@ export default {
         }
         ctx.emit("change", [...activeMap.value]);
       } else {
-        active.value = item.value;
+        active.value = active.value === item.value ? "" : item.value;
         ctx.emit("change", active.value);
       }
     };

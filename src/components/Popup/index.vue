@@ -15,7 +15,7 @@
               <CheckBox
                 :items="renderProps(item).options"
                 :multiple="renderProps(item).multiple"
-                :data="_data[item.field] || []"
+                :data="_data[item.field]"
                 @change="checkBoxChange($event, _data, item.field)"
               />
             </div>
@@ -60,9 +60,9 @@ export default {
     },
   },
   setup(props, ctx) {
-    const _data = ref();
+    let _data = ref();
     effect(() => {
-      _data.value = props.data;
+      _data.value = JSON.parse(JSON.stringify(props.data));
     });
     const close = () => {
       ctx.emit("close");

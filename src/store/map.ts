@@ -21,16 +21,15 @@ export const useStore = defineStore({
       );
     },
     getLocalStorageFilters() {
-      if (
-        !Reflect.ownKeys(this.filters).length &&
-        localStorage.getItem(this.localStorageMap.filters)
-      ) {
-        this.filters = localStorage.getItem(this.localStorageMap.filters) || {};
-      }
-
       const filters = localStorage.getItem(this.localStorageMap.filters);
       if (filters && typeof filters === "string") {
-        return JSON.parse(filters);
+        const filtersJSON = JSON.parse(filters);
+
+        if (!Reflect.ownKeys(this.filters).length) {
+          //如果store没存储则同步localStorage
+          this.filters = filtersJSON;
+        }
+        return filtersJSON;
       }
       return {};
     },
