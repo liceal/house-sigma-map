@@ -3,7 +3,7 @@
     api-key="AIzaSyA1Krb9T9-F1KMysusQqc3b_Hk6YRL-0YU"
     class="google-map"
     :center="getMapCenter"
-    :zoom="15"
+    :zoom="13"
     @click="googleMapClick"
   >
     <!-- <Marker :options="{ position: center }" />
@@ -14,7 +14,7 @@
       :options="map"
       @click="markerClick"
     >
-      <InfoWindow :ref="setInfoWindowRef">
+      <InfoWindow ref="infoWindowRefs" @closeclick="aaaa">
         <p>
           <label>up date:</label>
           {{ map.options.up_date }}
@@ -44,11 +44,8 @@ export default {
     const mapStore = useStore();
 
     const infoWindowRefs = ref([]);
-    const setInfoWindowRef = (el) => {
-      infoWindowRefs.value.push(el);
-    };
 
-    const DefaultCenter = { lat: 40.689247, lng: -74.044502 }; //默认
+    const DefaultCenter = { lat: 49.2238816, lng: -122.9110533 }; //默认中心点
 
     const mapData = [
       {
@@ -124,9 +121,7 @@ export default {
     });
 
     const getMapData = computed(() => {
-      console.log(mapStore.filters);
       let { Bathroom, Bedrooms, GarageParking } = mapStore.filters;
-      console.log(Bathroom, Bedrooms, GarageParking);
 
       function analysis(str) {
         if (!str) return null;
@@ -164,8 +159,6 @@ export default {
         return true;
       }
 
-      // console.log(filterMap(2, 3));
-
       return mapData
         .filter((item) => filterMap(item.house_prop))
         .map((item) => {
@@ -189,18 +182,19 @@ export default {
 
     const googleMapClick = () => {
       console.log(infoWindowRefs.value);
-      // infoWindowRefs.value.forEach((ref) => {
-      // ref.close();
-      // });
+      infoWindowRefs.value.forEach((ref) => {
+        // todo close window
+        // ref.close();
+      });
     };
     return {
       DefaultCenter,
       mapData,
       getMapData,
       getMapCenter,
-      setInfoWindowRef,
       markerClick,
       googleMapClick,
+      infoWindowRefs,
     };
   },
 };
