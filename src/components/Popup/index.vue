@@ -15,8 +15,7 @@
               <CheckBox
                 :items="renderProps(item).options"
                 :multiple="renderProps(item).multiple"
-                :data="_data[item.field]"
-                @change="checkBoxChange($event, _data, item.field)"
+                v-model:data="_data[item.field]"
               />
             </div>
             <hr />
@@ -95,12 +94,6 @@ export default {
     const renderProps = (item) => {
       return item?.itemRender?.props;
     };
-
-    const checkBoxChange = (val, data, field) => {
-      data[field] = val;
-      // console.log(val, data, field);
-      // console.log(_data);
-    };
     return {
       _data,
       close,
@@ -108,7 +101,6 @@ export default {
       apply,
       renderType,
       renderProps,
-      checkBoxChange,
     };
   },
 };

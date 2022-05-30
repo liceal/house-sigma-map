@@ -52,9 +52,11 @@ export default {
         } else {
           activeMap.value.add(item.value);
         }
+        ctx.emit("update:data", [...activeMap.value]);
         ctx.emit("change", [...activeMap.value]);
       } else {
         active.value = active.value === item.value ? "" : item.value;
+        ctx.emit("update:data", active.value);
         ctx.emit("change", active.value);
       }
     };
