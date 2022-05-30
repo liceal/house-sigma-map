@@ -17,17 +17,17 @@
       <InfoWindow ref="infoWindowRefs">
         <p>
           <label>up date:</label>
-          {{ map.options.up_date }}
+          {{ map.info.up_date }}
         </p>
         <p>
           <label>price:</label>
-          {{ map.options.price }}
+          {{ map.info.price }}
         </p>
         <p>
           <label>status:</label>
-          {{ map.options.status }}
+          {{ map.info.status }}
         </p>
-        <img :src="map.options.photo" class="map-img" />
+        <img :src="map.info.photo" class="map-img" />
       </InfoWindow>
     </Marker>
   </GoogleMap>
@@ -164,13 +164,21 @@ export default {
         .filter((item) => filterMap(item.house_prop))
         .map((item) => {
           return {
-            options: item,
+            info: item,
             position: {
               lat: item.location.lat,
               lng: item.location.lon,
             },
-            label: item.label,
-            // icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/info-i_maps.png",
+            options: {
+              label: {
+                text: item.label,
+                color: "#fff",
+                className: "marker-label",
+              },
+              icon: {
+                // url: "https://static.housesigma.com/app/assets/mapbox/dot-efb92b.png",
+              },
+            },
           };
         });
     });
@@ -202,9 +210,32 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.google-map {
+::v-deep.google-map {
   width: 100%;
   height: calc(100vh - 93px);
+  .marker-label {
+    font-weight: 600;
+    font-size: 14px;
+    padding: 2px 7px;
+    background-color: #28a3b3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    border: 2px solid white;
+    border-bottom: 0px;
+    &::after {
+      content: "";
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      bottom: -9px;
+      z-index: -1;
+      transform: rotate(45deg);
+      background-color: #28a3b3;
+      border: 2px solid white;
+    }
+  }
 }
 .map-img {
   width: 200px;
