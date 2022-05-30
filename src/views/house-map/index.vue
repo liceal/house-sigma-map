@@ -31,11 +31,6 @@ export default {
     const searchValue = ref("");
     provide("searchValue", searchValue);
 
-    const defaultFiltersData = {
-      Bedrooms: [],
-      Bathroom: "",
-      GarageParking: "",
-    };
     const filterBlock = reactive({
       items: [
         {
