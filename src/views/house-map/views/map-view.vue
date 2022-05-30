@@ -175,9 +175,9 @@ export default {
                 color: "#fff",
                 className: "marker-label",
               },
-              icon: {
-                // url: "https://static.housesigma.com/app/assets/mapbox/dot-efb92b.png",
-              },
+              // icon: {
+              //   url: "https://static.housesigma.com/app/assets/mapbox/dot-efb92b.png",
+              // },
             },
           };
         });
