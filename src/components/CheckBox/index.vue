@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { unref, ref } from "vue";
+import { unref, ref, effect } from "vue";
 export default {
   name: "CheckBox",
   props: {
@@ -31,15 +31,19 @@ export default {
     },
   },
   setup(props, ctx) {
-    const activeMap = ref(new Set());
+    const activeMap = ref();
     let active = ref();
-    if (props.multiple) {
-      props.data?.forEach((item) => {
-        activeMap.value.add(item);
-      });
-    } else {
-      active.value = props.data ? unref(props.data) : "";
-    }
+    effect(() => {
+      // 源数据改变时初始值
+      activeMap.value = new Set();
+      if (props.multiple) {
+        props.data?.forEach((item) => {
+          activeMap.value.add(item);
+        });
+      } else {
+        active.value = props.data ? unref(props.data) : "";
+      }
+    });
 
     const toggle = (item) => {
       if (props.multiple) {

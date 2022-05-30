@@ -35,7 +35,7 @@
 
 <script>
 import CheckBox from "@/components/CheckBox/index.vue";
-import { toRefs, ref, unref, effect } from "vue";
+import { toRefs, ref, unref, effect, watch } from "vue";
 export default {
   name: "PopUp",
   components: {
@@ -62,12 +62,23 @@ export default {
   setup(props, ctx) {
     let _data = ref();
     effect(() => {
-      _data.value = JSON.parse(JSON.stringify(props.data));
+      _data.value = JSON.parse(JSON.stringify(props.data)); // 源头数据改变初始值
     });
+
+    watch(
+      () => props.visible,
+      (val) => {
+        if (val) {
+          _data.value = JSON.parse(JSON.stringify(props.data)); //打开的时候初始值
+        }
+      }
+    );
+
     const close = () => {
       ctx.emit("close", props);
     };
     const clear = () => {
+      _data.value = JSON.parse(JSON.stringify(props.data)); //清空的时候初始值
       ctx.emit("clear", props);
     };
     const apply = () => {
