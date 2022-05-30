@@ -14,7 +14,7 @@
       :options="map"
       @click="markerClick"
     >
-      <InfoWindow ref="infoWindowRefs" @closeclick="aaaa">
+      <InfoWindow ref="infoWindowRefs">
         <p>
           <label>up date:</label>
           {{ map.options.up_date }}
