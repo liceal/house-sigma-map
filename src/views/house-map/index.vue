@@ -16,7 +16,7 @@
 <script>
 import MapHeader from "./components/map-header.vue";
 import MapView from "./views/map-view.vue";
-import { ref, reactive, provide } from "vue";
+import { ref, reactive, provide, nextTick } from "vue";
 import { mapStore } from "@/store/map";
 import { cloneDeep } from "@/utils/index";
 export default {
@@ -193,6 +193,9 @@ export default {
 
       // maper.setFilters(val);
       console.log("apply", val, filterBlock);
+      nextTick(() => {
+        alert("已完成过滤");
+      });
     };
     return { searchValue, filterBlock, searchEnter, filterApply, back };
   },
