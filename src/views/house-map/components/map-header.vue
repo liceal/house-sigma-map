@@ -92,7 +92,6 @@ export default {
        */
       clear: ({ data }) => {
         const defaultPopupData = defaultPopupDataMap.get(popupAttrs.value.id);
-        console.log("clear", data, defaultPopupData);
         Reflect.ownKeys(defaultPopupData).forEach((k) => {
           data[k] = defaultPopupData[k];
         });
