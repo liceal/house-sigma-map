@@ -6,8 +6,6 @@
     :zoom="13"
     @click="googleMapClick"
   >
-    <!-- <Marker :options="{ position: center }" />
-    <Marker :options="{ position: center1 }" /> -->
     <Marker
       v-for="(map, key) in getMapData"
       :key="map.id || key"
